@@ -1,0 +1,63 @@
+.movies {
+  background-color: #202020;
+  display: grid;
+  /* grid-template-columns: repeat(3, 1fr); */
+  grid-template-columns: repeat(auto-fit, minmax(339px, 1fr));
+  column-gap: 24px;
+  row-gap: 30px;
+  margin: 64px 70px 65px;
+  padding: 0;
+}
+
+.movies__button {
+  background-color: #424242;
+  color: #fff;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 15px;
+  width: 320px;
+  height: 36px;
+  border-radius: 6px;
+  outline: none;
+  border: none;
+  grid-column: span 3;
+  margin: 46px auto 0;
+  padding: 0;
+  transition: opacity 0.2s linear;
+}
+
+.movies__button:hover {
+  opacity: 0.6;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 1140px) {
+  .movies {
+    row-gap: 36px;
+    column-gap: 30px;
+    margin-left: 31px;
+    margin-right: 31px;
+    margin-bottom: 48px;
+  }
+
+  .movies__button {
+    grid-column: span 2;
+    margin-top: 40px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .movies {
+    grid-template-columns: none;
+    grid-template-rows: repeat(auto-fit, minmax(236px, 1fr));
+    gap: 16px;
+    max-width: 300px;
+    margin: 36px auto 157px;
+  }
+
+  .movies__button {
+    width: 240px;
+    grid-column: span 1;
+    margin-top: 66px;
+  }
+}

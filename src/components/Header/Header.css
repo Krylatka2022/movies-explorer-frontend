@@ -1,0 +1,33 @@
+.header {
+  background-color: #202020;
+  display: flex;
+  align-items: center;
+  min-height: 74px;
+  padding: 0 70px 0;
+  justify-content: space-between;
+}
+
+.header__logo {
+  background-image: url("../../images/logo.svg");
+  height: 38px;
+  width: 38px;
+  cursor: pointer;
+  transition: opacity 0.2s linear;
+}
+
+.header__logo:hover {
+  opacity: 0.6;
+}
+
+@media (max-width: 768px) {
+  .header {
+    padding: 0 30px 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .header {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+}
