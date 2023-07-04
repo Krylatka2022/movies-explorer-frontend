@@ -3,7 +3,7 @@ import './Footer.css';
 function Footer() {
   return (
     <footer className='footer'>
-      <h2 className='footer__title'>Учебный проект Яндекс.Практикум х BeatFilm.</h2>
+      <p className='footer__title'>Учебный проект Яндекс.Практикум х BeatFilm.</p>
       <hr className='footer__line'></hr>
       <nav className='footer__nav'>
         <p className='footer__copyright'> © {new Date().getFullYear()}</p>

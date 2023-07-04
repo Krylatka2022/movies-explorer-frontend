@@ -1,4 +1,4 @@
-.register {
+.auth {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -8,7 +8,7 @@
   max-width: 396px;
 }
 
-.register__logo {
+.auth__logo {
   width: 38px;
   height: 38px;
   text-decoration: none;
@@ -17,26 +17,26 @@
   display: block;
 }
 
-.register__logo:hover {
+.auth__logo:hover {
   opacity: 0.6;
   cursor: pointer;
 }
 
-.register__title {
+.auth__title {
   margin: 40px 0 40px;
   font-weight: 500;
   font-size: 24px;
   line-height: 29px;
 }
 
-.register__inputs {
+.auth__inputs {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   width: 100%;
 }
 
-.register__items {
+.auth__items {
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -44,20 +44,20 @@
   padding: 0;
 }
 
-.register__items-login {
+.auth__items-login {
   gap: 0;
 }
 
-.register__item {
+.auth__item {
   margin: 0;
   padding-bottom: 8px;
 }
 
-.register__item-login {
+.auth__item-login {
   padding-bottom: 10px;
 }
 
-.register__item-label {
+.auth__item-label {
   font-weight: 400;
   font-size: 10px;
   line-height: 12px;
@@ -65,7 +65,7 @@
   margin: 0;
 }
 
-.register__input {
+.auth__input {
   box-sizing: border-box;
   width: 100%;
   border: none;
@@ -78,20 +78,21 @@
   padding-bottom: 11px;
 }
 
-.register__input:focus {
+.auth__input:focus {
   outline: none;
   border-bottom: 1px solid #4285f4;
 }
 
-.register__input-login:focus {
+.auth__input-login:focus {
+  outline: none;
   border-bottom: 1px solid #424242;
 }
 
-.register__input_error {
+.auth__input_error {
   color: #ee3465;
 }
 
-.register__error {
+.auth__error {
   opacity: 0;
   display: block;
   margin: 10px 0 0;
@@ -102,11 +103,11 @@
   /* content: "что-то пошло не так ..."; */
 }
 
-.register__error_visible {
+.auth__error_visible {
   opacity: 1;
 }
 
-.register__button {
+.auth__button {
   margin: 124px 0 15px;
   padding: 15px 0;
   color: #fff;
@@ -119,16 +120,16 @@
   transition: opacity 0.2s linear;
 }
 
-.register__button:hover {
+.auth__button:hover {
   opacity: 0.6;
   cursor: pointer;
 }
 
-.register__button-login {
+.auth__button-login {
   margin: 192px 0 15px;
 }
 
-.register__text {
+.auth__text {
   width: 100%;
   margin: 0;
   text-align: center;
@@ -137,14 +138,14 @@
   line-height: 17px;
 }
 
-.register__link {
+.auth__link {
   margin-left: 7px;
   text-decoration: none;
   color: #4285f4;
   transition: opacity 0.2s linear;
 }
 
-.register__link:hover {
+.auth__link:hover {
   opacity: 0.6;
   cursor: pointer;
 }
@@ -154,69 +155,69 @@
     padding: 232px 0;
   }
 
-  .register__title {
+  .auth__title {
     margin: 40px 0;
   }
 
-  .register__button {
+  .auth__button {
     margin: 121px 0 16px;
     padding: 13px 0 15px;
     font-size: 14px;
     line-height: 17px;
   }
 
-  .register__button-login {
+  .auth__button-login {
     margin-top: 200px;
   }
-  .register__text {
+  .auth__text {
     font-size: 14px;
     line-height: 17px;
   }
 
-  .register__link {
+  .auth__link {
     margin-left: 6px;
   }
 }
 
 @media screen and (max-width: 600px) {
-  .register {
+  .auth {
     max-width: 320px;
     padding: 56px 30px 30px;
     align-items: center;
-    margin: 0;
   }
-  .register__title {
+  .auth__title {
     margin-top: 50px;
     padding-bottom: 40px;
   }
 
-  .register__item {
+  .auth__item {
     padding-bottom: 14px;
   }
 
-  .register__item-login {
+  .auth__item-login {
     padding-bottom: 18px;
   }
 
-  .register__button {
+  .auth__button {
     margin: 214px 0 16px;
     padding: 13px 0 14px;
     font-size: 12px;
     line-height: 15px;
   }
 
-  .register__button-login {
+  .auth__button-login {
     margin-top: 286px;
   }
-  .register__text {
+  .auth__text {
     font-size: 12px;
     line-height: 15px;
   }
 
-  .register__link {
+  .auth__link {
     margin-left: 6px;
   }
-  .register__error {
+
+  .auth__error {
     margin-top: 4px;
   }
 }

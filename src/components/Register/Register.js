@@ -1,4 +1,4 @@
-import './Register.css';
+import './Auth.css';
 import { Link } from 'react-router-dom';
 // import { useState } from 'react';
 import { useFormValidation } from '../../utils/useFormValidation';
@@ -37,21 +37,21 @@ function Register({ onRegister }) {
   };
 
   return (
-    <section className="register">
+    <section className="auth">
       <Link to="/" className="register__logo" alt="Логотип сайта"></Link>
-      <h2 className="register__title">Добро пожаловать!</h2>
-      <form className="register__inputs" onSubmit={handleSubmit} isValid={isValid} reset={reset}>
-        <fieldset className="register__items">
-          <label className="register__item">
-            <p className="register__item-label">Имя</p>
+      <h1 className="auth__title">Добро пожаловать!</h1>
+      <form className="auth__inputs" onSubmit={handleSubmit} isValid={isValid} reset={reset}>
+        <fieldset className="auth__items">
+          <label className="auth__item">
+            <p className="auth__item-label">Имя</p>
             <input
-              className="register__input"
+              className="auth__input"
               id='name'
               name="name"
               type="text"
               placeholder="Имя"
               minLength="2"
-              maxLength="40"
+              maxLength="30"
               value={values.name || ''}
               // value={name}
               // defaultValue='Виталий'
@@ -59,12 +59,12 @@ function Register({ onRegister }) {
               // onChange={e => setName(e.target.value)}
               required
             />
-            <span className={`register__error ${errors.name ? 'register__error_visible' : ''}`}>{errors.name}</span>
+            <span className={`auth__error ${errors.name ? 'auth__error_visible' : ''}`}>{errors.name}</span>
           </label>
-          <label className="register__item">
-            <p className="register__item-label">E-mail</p>
+          <label className="auth__item">
+            <p className="auth__item-label">E-mail</p>
             <input
-              className={'register__input'}
+              className={'auth__input'}
               id='email'
               name="email"
               type="email"
@@ -76,15 +76,16 @@ function Register({ onRegister }) {
               // onChange={e => setEmail(e.target.value)}
               required
             />
-            <span className={`register__error ${errors.email ? 'register__error_visible' : ''}`}>{errors.email}</span>
+            <span className={`auth__error ${errors.email ? 'auth__error_visible' : ''}`}>{errors.email}</span>
           </label>
-          <label className="register__item">
-            <p className="register__item-label">Пароль</p>
+          <label className="auth__item">
+            <p className="auth__item-label">Пароль</p>
             <input
-              className={'register__input register__input_error'}
+              className={'auth__input auth__input_error'}
               name="password"
               type="password"
               minLength="2"
+              maxLength="30"
               placeholder="Пароль"
               value={values.password || ''}
               // value={password}
@@ -93,13 +94,13 @@ function Register({ onRegister }) {
               // onChange={e => setPassword(e.target.value)}
               required
             />
-            <span className={`register__error ${errors.password ? 'register__error_visible' : ''}`}>{errors.password}Что-то пошло не так..</span>
+            <span className={`auth__error ${errors.password ? 'auth__error_visible' : ''}`}>{errors.password}Что-то пошло не так..</span>
           </label>
         </fieldset>
-        <button className='register__button' type="submit">Зарегистрироваться</button>
+        <button className='auth__button' type="submit">Зарегистрироваться</button>
       </form>
-      <p className="register__text">Уже зарегистрированы?
-        <Link to="/signin" className='register__link'>Войти</Link></p>
+      <p className="auth__text">Уже зарегистрированы?
+        <Link to="/signin" className='auth__link'>Войти</Link></p>
 
     </section>
   );

@@ -20,13 +20,16 @@
 }
 
 .error-page__link {
+  display: block;
   font-weight: 400;
   font-size: 14px;
   line-height: 17px;
   color: #4285f4;
   text-align: center;
   cursor: pointer;
-  margin: 184px 0 0;
+  margin: 184px auto 0;
+  background-color: transparent;
+  border: none;
   transition: opacity 0.2s linear;
 }
 

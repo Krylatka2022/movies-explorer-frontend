@@ -10,7 +10,7 @@ function AboutMe() {
       <hr className='about-me__line' ></hr>
       <div className='about-me__contain'>
         <div className='about-me__info'>
-          <p className='about-me__name'>Дарья</p>
+          <h3 className='about-me__name'>Дарья</h3>
           <p className='about-me__status'>Фронтенд-разработчик, 45 лет</p>
           <p className='about-me__description'>
             Родилась в Ленинграде, живу в Санкт-Петербурге, закончила факультет экономики (СПбГУП) и юриспруденции (ГУАП).

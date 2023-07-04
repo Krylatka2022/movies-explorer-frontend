@@ -62,6 +62,13 @@
   background-color: transparent;
   color: #fff;
 }
+.profile__field:focus {
+  outline: none;
+}
+
+.profile__field_editing:focus {
+  background-color: #4285f4;
+}
 
 .profile__form-buttons {
   display: flex;
@@ -81,6 +88,15 @@
   line-height: 15px;
   color: #fff;
   cursor: pointer;
+  transition: opacity 0.2s linear;
+}
+
+.profile__button:hover {
+  opacity: 0.6;
+}
+
+.profile__button_save {
+  color: #4285f4;
 }
 
 .profile__button_logout {

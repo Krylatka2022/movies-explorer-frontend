@@ -8,13 +8,13 @@ function AboutProject() {
       <hr className='about-project__line'></hr>
       <ul className='about-project__description'>
         <li className='about-project__description-contain'>
-          <h2 className='about-project__description-title'>Дипломный проект включал 5 этапов</h2>
+          <h3 className='about-project__description-title'>Дипломный проект включал 5 этапов</h3>
           <p className='about-project__description-text'>
             Составление плана, работу над бэкендом, вёрстку, добавление функциональности и финальные доработки.
           </p>
         </li>
         <li className='about-project__description-contain'>
-          <h2 className='about-project__description-title'>На выполнение диплома ушло 5 недель</h2>
+          <h3 className='about-project__description-title'>На выполнение диплома ушло 5 недель</h3>
           <p className='about-project__description-text'>
             У каждого этапа был мягкий и жёсткий дедлайн, которые нужно было соблюдать, чтобы успешно защититься.
           </p>

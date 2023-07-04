@@ -117,32 +117,26 @@ function App() {
     setIsLoggedIn(false);
   }
 
+  const isHeaderVisible = pathname === '/' || pathname === '/movies' || pathname === '/saved-movies' || pathname === '/profile';
+
   return (
     <div className="app">
-
       <button type="button" onClick={LoggedInNavbar}>CLICK_NavBar</button>
-      <button type="button" onClick={LoggedInNavigation}> CLICK_Navigation</button>
+      <button type="button" onClick={LoggedInNavigation}>CLICK_Navigation</button>
 
-
-      {
-        pathname === '/' || pathname === '/movies' || pathname === '/saved-movies' || pathname === '/profile' ?
-          <Header isLoggedIn={isLoggedIn} isLoading={isLoading} /> : ''
-      }
-
+      {isHeaderVisible && <Header isLoggedIn={isLoggedIn} isLoading={isLoading} />}
 
       <Routes>
-        <Route exact path="/" element={<Main />} />
-        <Route path="/movies" element={<Movies />} />
-        <Route path="/saved-movies" element={<SavedMovies />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/signin" element={isLoggedIn ? <Navigate to="/" /> : <Login onLogin={handleLogin} />} />
-        <Route path="/signup" element={isLoggedIn ? <Navigate to="/" /> : <Register onRegister={handleRegister} />} />
-        <Route path="*" element={<PageNotFound />} />
+        <Route path="/" element={<Main />} />
+        <Route path="/movies" element={<main><Movies /></main>} />
+        <Route path="/saved-movies" element={<main><SavedMovies /></main>} />
+        <Route path="/profile" element={<main><Profile /></main>} />
+        <Route path="/signin" element={isLoggedIn ? <Navigate to="/" /> : <main><Login onLogin={handleLogin} /></main>} />
+        <Route path="/signup" element={isLoggedIn ? <Navigate to="/" /> : <main><Register onRegister={handleRegister} /></main>} />
+        <Route path="*" element={<main><PageNotFound /></main>} />
       </Routes>
-
-      {pathname === '/profile' || pathname === '/signin' || pathname === '/signup' ? '' : <Footer />}
-    </div >
+    </div>
   );
-};
+}
 
 export default App;
