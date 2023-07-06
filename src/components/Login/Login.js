@@ -19,13 +19,13 @@ function Login({ onLogin }) {
   return (
     <section className="auth">
       <Link to="/" className="auth__logo" alt="Логотип сайта"></Link>
-      <h2 className="auth__title">Рады видеть!</h2>
+      <h1 className="auth__title">Рады видеть!</h1>
       <form className="auth__inputs" ref={formRef} onSubmit={handleSubmit} isValid={isValid} onChange={handleChange}>
         <fieldset className="auth__items auth__items-login">
           <label className="auth__item auth__item-login">
             <p className="auth__item-label">E-mail</p>
             <input
-              className={'auth__input auth__input_login'}
+              className={'auth__input auth__input-login'}
               name="email"
               type="email"
               placeholder="Ваш E-mail"

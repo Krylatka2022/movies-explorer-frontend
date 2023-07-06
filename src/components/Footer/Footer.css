@@ -54,7 +54,7 @@
 
 @media (max-width: 768px) {
   .footer {
-    padding: 73px 20px 15px 30px;
+    padding: 73px 25px 19px 22px;
   }
 
   .footer__title {
@@ -73,10 +73,10 @@
 
 @media (max-width: 600px) {
   .footer {
-    margin: 149px 10px 14px;
-    padding: 0;
+    margin: 146px 10px 14px;
     font-size: 12px;
     line-height: 15px;
+    padding: 0;
   }
 
   .footer__nav {

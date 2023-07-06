@@ -9,7 +9,8 @@
 .navigation__list {
   display: flex;
   justify-content: space-between;
-  gap: 30px;
+  align-items: center;
+  gap: 27px;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -25,6 +26,9 @@
   text-decoration: none;
   transition: opacity 0.2s linear;
   color: #fff;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
 }
 
 .navigation__link:hover {

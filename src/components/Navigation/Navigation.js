@@ -1,23 +1,45 @@
 import './Navigation.css';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import NavBar from '../Movies/NavBar/NavBar';
 
 function Navigation({ isLoggedIn }) {
+  const navigate = useNavigate();
   const { pathname } = useLocation();
+
+  const handleButtonClick = (path) => {
+    // Обработчик нажатия кнопки
+    // Перейти на указанный маршрут
+    navigate(path);
+  };
+
   return (
     <nav className='navigation'>
-      {isLoggedIn ? <NavBar /> : (
+      {isLoggedIn ? (
+        <NavBar />
+      ) : (
         <ul className="navigation__list">
           <li className="navigation__item">
-            <Link to="/signup" className={`navigation__link ${pathname === "/" && 'navigation__link_register'}`}>Регистрация</Link>
+            <button
+              onClick={() => handleButtonClick('/signup')}
+              className={`navigation__link ${pathname === '/' ? 'navigation__link_register' : ''}`}
+              type="button"
+            >
+              Регистрация
+            </button>
           </li>
           <li className="navigation__item">
-            <Link to="/signin" className="navigation__link navigation__link_signin">Войти</Link>
+            <button
+              onClick={() => handleButtonClick('/signin')}
+              className="navigation__link navigation__link_signin"
+              type="button"
+            >
+              Войти
+            </button>
           </li>
         </ul>
       )}
     </nav>
   );
-};
+}
 
 export default Navigation;

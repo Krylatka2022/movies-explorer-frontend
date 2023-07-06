@@ -157,6 +157,7 @@
 
   .search__form {
     margin-bottom: 109px;
+    padding: 16px 22px 18px 19px;
   }
 
   .search__checkbox {
@@ -190,13 +191,14 @@
 
 @media (max-width: 630px) {
   .search {
-    padding: 80px 10px 10px;
+    padding: 0 10px;
   }
 
   .search__form {
     justify-content: center;
     flex-direction: column;
     background-color: transparent;
+    margin-bottom: 41px;
   }
 
   .search__input {
@@ -223,11 +225,11 @@
     border-radius: 9px;
     border: none;
     width: 100%;
-    height: 72px;
-    margin-top: 85px;
+    margin-top: 78px;
     /* padding-bottom: 64px; */
-    padding-right: 19px;
-    padding-left: 19px;
+    padding-right: 20px;
+    padding-left: 20px;
+    padding: 16px 20px 19px;
   }
 
   .search__checkbox {

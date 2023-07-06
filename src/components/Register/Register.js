@@ -38,7 +38,7 @@ function Register({ onRegister }) {
 
   return (
     <section className="auth">
-      <Link to="/" className="register__logo" alt="Логотип сайта"></Link>
+      <Link to="/" className="auth__logo" alt="Логотип сайта"></Link>
       <h1 className="auth__title">Добро пожаловать!</h1>
       <form className="auth__inputs" onSubmit={handleSubmit} isValid={isValid} reset={reset}>
         <fieldset className="auth__items">

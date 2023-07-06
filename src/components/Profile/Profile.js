@@ -41,7 +41,7 @@ function Profile() {
             </li>
           </ul>
           <div className="profile__form-buttons">
-            <button className={`profile__button ${isEditing ? "profile__button_save" : "profile__button_edit"}`} type="button" onClick={handleClick}>
+            <button className={`profile__button ${isEditing ? "profile__button_save" : "profile__button_edit"}`} type="submit" onClick={handleClick}>
               {isEditing ? "Сохранить" : "Редактировать"}
             </button>
             <button className="profile__button profile__button_logout" type="button">

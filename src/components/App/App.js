@@ -64,7 +64,15 @@ function App() {
         navigate('/movies', { replace: true });
       })
       .catch((err) => {
-        alert('Что-то пошло не так')
+        <dialog open>
+          <p>Уверены?</p>
+          <div>
+            <button>Yes</button>
+            <button onclick="document.querySelector('dialog').close()">Cancel</button>
+          </div>
+        </dialog>
+
+        // alert('Что-то пошло не так')
       });
   };
 
