@@ -1,0 +1,117 @@
+.movie {
+  margin: 0;
+  padding: 0;
+  background-color: #222222;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.movie__element {
+  display: flex;
+  justify-content: space-between;
+}
+
+.movie__image {
+  width: 100%;
+  max-height: 203px;
+  object-fit: cover;
+}
+
+.movie_title-duration {
+  display: flex;
+  flex-direction: column;
+}
+
+.movie__title {
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 16px;
+  margin: 0;
+  padding-left: 14px;
+  padding-top: 12px;
+}
+
+.movie__save-button {
+  background: transparent url(../../../images/save9d.svg) center / 30px
+    no-repeat;
+  border-radius: 50px;
+  border: none;
+  height: 30px;
+  width: 30px;
+  margin: 17px 14px;
+  padding: 0;
+  transition: opacity 0.2s linear;
+}
+
+.movie__duration {
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 13px;
+  color: #8b8b8b;
+  margin: 12px 13px;
+}
+
+.movie__save-button:hover {
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+.movie__save-button_active {
+  background: transparent url(../../../images/save9.svg) center / 30px no-repeat;
+}
+
+.movie__save-button_delete {
+  background-image: url(../../../images/delete-movie.svg);
+}
+
+@media screen and (max-width: 768px) {
+  .movie__title {
+    padding-top: 13px;
+  }
+
+  .movie__image {
+    max-height: 190px;
+  }
+
+  .movie__save-button {
+    background: transparent url(../../../images/save9d.svg) center / 30px
+      no-repeat;
+    border-radius: 50px;
+    border: none;
+    height: 30px;
+    width: 30px;
+    margin: 17px 14px;
+    padding: 0;
+    transition: opacity 0.2s linear;
+  }
+
+  .movie__save-button:hover {
+    cursor: pointer;
+    opacity: 0.6;
+  }
+
+  .movie__save-button_active {
+    background: transparent url(../../../images/save9.svg) center / 30px
+      no-repeat;
+  }
+
+  .movie__save-button_delete {
+    background-image: url(../../../images/delete-movie.svg);
+  }
+}
+
+@media screen and (max-width: 340px) {
+  .movie {
+    padding: 0;
+  }
+
+  .movie__title {
+    padding-top: 11px;
+  }
+
+  .movie__duration {
+    margin: 0;
+    padding-left: 14px;
+    padding-top: 11px;
+  }
+}
