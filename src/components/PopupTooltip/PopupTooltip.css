@@ -1,0 +1,61 @@
+.tooltip__overlay {
+  display: none;
+  position: fixed;
+  backdrop-filter: blur(11px);
+  height: 100vh;
+  width: 100vw;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.tooltip__logo {
+  margin-bottom: 35px;
+  margin-top: 10px;
+}
+
+.tooltip_opened {
+  display: block;
+}
+
+.tooltip {
+  position: fixed;
+  top: 27%;
+  left: calc((100vw - 420px) / 2);
+  /* background: #2f2f2f; */
+  background-color: transparent;
+  height: 300px;
+  width: 420px;
+  z-index: 2;
+  text-align: center;
+  /* border-radius: 20px; */
+}
+
+.tooltip__title {
+  max-width: 100vw;
+  margin: 40px auto 70px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 29px;
+}
+
+/* .tooltip__title_error {
+  color: #ee3465;
+} */
+.tooltip__button {
+  background: #3ddc84;
+  color: #fff;
+  max-width: 269px;
+  width: 100%;
+  height: 40px;
+  margin: 0px;
+  cursor: pointer;
+  border-radius: 9px;
+}
+
+@media (max-width: 768px) {
+  .tooltip {
+    top: 30%;
+  }
+}

@@ -62,12 +62,20 @@
   background-color: transparent;
   color: #fff;
 }
-.profile__field:focus {
-  outline: none;
+
+.profile__error {
+  color: #ee3465;
+  font-size: 12px;
+  line-height: 1.21;
+  display: block;
+  min-height: 30px;
+  max-width: 358px;
+  visibility: hidden;
+  padding-top: 5px;
 }
 
-.profile__field_editing:focus {
-  background-color: #4285f4;
+.profile__error_visible {
+  visibility: visible;
 }
 
 .profile__form-buttons {
