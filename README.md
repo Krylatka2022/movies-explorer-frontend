@@ -4,4 +4,4 @@
 
 [Ссылка на Pull Request](https://github.com/Krylatka2022/movies-explorer-frontend/pull/16#issue-1810756948)
 
-[Ссылка на Frontend](https://diploma-krylatka.nomoredomains.rocks/)
+[Ссылка на Frontend](https://diploma-krylatka.nomoredomains.rocks)
