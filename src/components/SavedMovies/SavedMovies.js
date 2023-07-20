@@ -62,11 +62,14 @@ function SavedMovies(isLoggedIn) {
     return () => window.removeEventListener("resize", updateWidth);
   });
 
-  const [searchWord, setSearchWord] = useState("");
+  // const [searchWord, setSearchWord] = useState("");
 
   const handleClick = (searchWord) => {
     updateWidth();
-    // setLoading(true);
+
+    setLoading(true);
+    // setSearchWord(""); // Очистить значение формы поиска
+
     moviesApi.getSavedMovies()
       .then((movies) => {
         if (!movies) {
@@ -84,7 +87,6 @@ function SavedMovies(isLoggedIn) {
         }
         localStorage.setItem('searchKeySaved', searchWord.toLowerCase());
         setSearchKey(searchWord.toLowerCase());
-        setSearchWord(""); // Очистить значение формы поиска
         localStorage.setItem('isSwitchedSaved', JSON.stringify(isSwitched));
         localStorage.setItem('searchResultSaved', JSON.stringify(movies));
       })
@@ -133,15 +135,15 @@ function SavedMovies(isLoggedIn) {
           isSwitched={isSwitched}
           label={"Фильм"}
           search={searchKey}
-          value={searchWord} // Добавляем значение из состояния searchWord
-          onChange={(e) => setSearchWord(e.target.value)} // Обновляем значение в состоянии searchWord
+        // value={searchWord} // Добавляем значение из состояния searchWord
+        // onChange={(e) => setSearchWord(e.target.value)} // Обновляем значение в состоянии searchWord
         />
 
         <MoviesCardList
           movies={movies}
           savedMovies={allMovies}
           onCardLike={handleCardDelete}
-          mode='saved'
+          // mode='saved'
           onCardDelete={handleCardDelete}
         />
 

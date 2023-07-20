@@ -1,19 +1,18 @@
-// import React from "react";
-// import { Navigate } from "react-router-dom";
+import React from "react";
+import { Navigate } from "react-router-dom";
+// import Preloader from "../Movies/Preloader/Preloader";
 
-// const ProtectedRoute = ({ component: Component, ...props }) => {
-//   return props.isLoggedIn ? <Component {...props} /> : <Navigate to="/main" replace />;
+
+// export const ProtectedRoutes = ({ component: Component, ...props }) => {
+//   return props.isLoading ? <Preloader /> : props.isLoggedIn ? <Component {...props} /> : <Navigate to="/" replace />
 // };
 
-// export default ProtectedRoute;
-
-import React from 'react'
-import { Navigate } from 'react-router-dom'
+// export default ProtectedRoutes;
 
 export const ProtectedRoutes = ({ isLoggedIn, children }) => {
 
   if (!isLoggedIn) {
-    <Navigate to='/' />
+    <Navigate to='/' replace />
   }
   return children
 }

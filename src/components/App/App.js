@@ -22,6 +22,16 @@ export const App = () => {
   const [tooltipMessage, setTooltipMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
+
+  // Получение данных текущего пользователя
+  useEffect(() => {
+    if (isLoggedIn) {
+      mainApi.getUserInfo()
+        .then((data) => setCurrentUser(data))
+        .catch(error => console.log(error));
+    }
+  }, [isLoggedIn]);
+
   useEffect(() => {
     checkToken();
   }, []);
@@ -126,12 +136,13 @@ export const App = () => {
     <CurrentUserContext.Provider value={currentUser}>
       <Router>
         <div className="app">
-          <Routes>
 
+          <Routes>
             <Route path="/" element={
-              <ProtectedRoutes isLoggedIn={isLoggedIn}>
-                <Main isLoggedIn={isLoggedIn} />
-              </ProtectedRoutes>
+              // {
+              //   Localhost isLoggedIn={isLoggedIn}
+              // }
+              <Main isLoggedIn={!isLoggedIn} />
             } />
 
             <Route path="/movies" element={

@@ -9,7 +9,9 @@ import Footer from '../Footer/Footer';
 function Main({ isLoggedIn }) {
   return (
     <>
-      <Header isLoggedIn={!isLoggedIn} />
+      <header>
+        <Header isLoggedIn={!isLoggedIn} />
+      </header>
       <main>
         <Promo />
         <AboutProject />

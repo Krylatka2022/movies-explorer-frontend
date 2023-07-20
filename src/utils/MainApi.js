@@ -47,21 +47,36 @@ class MainApi {
       .then(res => this._checkResponse(res))
   }
 
-  signOut(email) {
+  // signOut(email) {
+  //   return fetch(`${this._baseUrl}/signout`, {
+  //     method: "POST",
+  //     credentials: 'include',
+  //     headers: {
+  //       // "Origin": "https://diploma-krylatka.nomoredomains.rocks",
+  //       "Accept": "application/json",
+  //       "Content-Type": "application/json"
+  //     },
+  //     body: JSON.stringify({
+  //       email
+  //     }),
+  //   })
+  //     .then(res => this._checkResponse(res))
+  // }
+
+  signOut = () => {
     return fetch(`${this._baseUrl}/signout`, {
       method: "POST",
-      credentials: 'include',
+      credentials: "include",
       headers: {
         // "Origin": "https://diploma-krylatka.nomoredomains.rocks",
         "Accept": "application/json",
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({
-        email
-      }),
     })
       .then(res => this._checkResponse(res))
   }
+
+
 
   checkToken() {
     return fetch(`${this._baseUrl}/users/me`, {

@@ -25,11 +25,11 @@ class MoviesApi {
     return fetch(`${baseUrl2}/movies`, {
       method: "GET",
       credentials: 'include',
-      headers: {
-        // "Origin": "https://diploma-krylatka.nomoredomains.rocks",
-        "Accept": "application/json",
-        "Content-Type": "application/json",
-      },
+      // headers: {
+      //   // "Origin": "https://diploma-krylatka.nomoredomains.rocks",
+      //   "Accept": "application/json",
+      //   "Content-Type": "application/json",
+      // },
     })
       .then((res) => this._checkResponse(res));
   }

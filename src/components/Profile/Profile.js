@@ -30,6 +30,11 @@ function Profile({ isLoggedIn, logOut, changeProfile, isLoading }) {
   }, [values.email, values.name]);
 
 
+  useEffect(() => {
+    if (!isLoggedIn) {
+      reset();
+    }
+  }, [isLoggedIn]);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -37,6 +42,8 @@ function Profile({ isLoggedIn, logOut, changeProfile, isLoading }) {
       name: values['userName'],
       email: values['userEmail']
     });
+    setIsValid(false)
+    setIsEditing(!isEditing)
   }
 
 
@@ -65,6 +72,21 @@ function Profile({ isLoggedIn, logOut, changeProfile, isLoading }) {
     }
   }
 
+  // function handleClick(e) {
+  //   e.preventDefault();
+
+  //   setIsEditing(isEditing);
+  //   setValue("userName", currentUser.name);
+  //   setValue("userEmail", currentUser.email);
+  // }
+
+
+
+  function handleLogout(e) {
+    e.preventDefault();
+    logOut();
+  }
+
   return (
     <>
       <header>
@@ -89,8 +111,8 @@ function Profile({ isLoggedIn, logOut, changeProfile, isLoading }) {
                   disabled={!isEditing}
                   onChange={(e) => { handleChange(e) }}
                   // defaultValue={currentUser.name}
-                  // value={values['userName'] ?? ''}
-                  value={values.userName || ''}
+                  value={values['userName'] ?? ''}
+                // value={values.userName || ''}
                 />
               </li>
               <span className={errorClassName('userName')} id="inputName-error">{errors['userName']}</span>
@@ -108,8 +130,8 @@ function Profile({ isLoggedIn, logOut, changeProfile, isLoading }) {
                   disabled={!isEditing}
                   onChange={handleChange}
                   // defaultValue={currentUser.email}
-                  // value={values['userEmail'] ?? ''}
-                  value={values.userEmail || ''}
+                  value={values['userEmail'] ?? ''}
+                // value={values.userEmail || ''}
                 />
               </li>
               <span className={errorClassName('userEmail')} id="inputEmail-error">{errors['userEmail']}</span>
@@ -126,14 +148,15 @@ function Profile({ isLoggedIn, logOut, changeProfile, isLoading }) {
                   Редактировать
                 </button>
               )}
-              <Link className="profile__button profile__button_logout"
-                onClick={logOut}
-                type="button"
-                to=''
+              <button className="profile__button profile__button_logout"
+                onClick={handleLogout}
+                type="submit"
+              // На Localhost при сабмите страницы user возвращается
+              // to=''
               // onClick={() => handleLogoutClick('/')}
               >
                 Выйти из аккаунта
-              </Link>
+              </button>
             </div>
           </form>
         </main>

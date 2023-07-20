@@ -3,7 +3,7 @@
   padding: 0;
   background-color: #222222;
   border-radius: 10px;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 .movie__element {

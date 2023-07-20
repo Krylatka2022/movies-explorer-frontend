@@ -1,8 +1,8 @@
 .movies {
   background-color: #202020;
   display: grid;
-  /* grid-template-columns: repeat(3, 1fr); */
-  grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
+  /* grid-template-columns: repeat(auto-fit, minmax(330px, 1fr)); */
   column-gap: 24px;
   row-gap: 30px;
   margin: 64px 70px 65px;
@@ -73,18 +73,19 @@
   }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1075px) {
   .movies {
     row-gap: 36px;
     column-gap: 30px;
     margin-left: 31px;
     margin-right: 31px;
     margin-bottom: 48px;
-    grid-template-columns: repeat(auto-fit, minmax(317px, 1fr));
+    /* grid-template-columns: repeat(auto-fit, minmax(317px, 1fr)); */
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 690px) {
   .movies {
     /* grid-template-columns: none; */
     grid-template-rows: repeat(auto-fit, minmax(236px, 1fr));
