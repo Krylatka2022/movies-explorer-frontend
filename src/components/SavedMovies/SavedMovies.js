@@ -23,28 +23,32 @@ import {
 
 function SavedMovies(isLoggedIn) {
 
-  const [movies, setMovies] = useState(JSON.parse(localStorage.getItem('searchResultSaved')) ? JSON.parse(localStorage.getItem('searchResultSaved')) : []);
+  // const [movies, setMovies] = useState(JSON.parse(localStorage.getItem('searchResultSaved')) ? JSON.parse(localStorage.getItem('searchResultSaved')) : []);
+  const [movies, setMovies] = useState([]);
   const [allMovies, setAllMovies] = useState([]);
   const [isSwitched, setIsSwitched] = useState(JSON.parse(localStorage.getItem('isSwitchedSaved')));
   const [searchKey, setSearchKey] = useState(localStorage.getItem('searchKeySaved') ? localStorage.getItem('searchKeySaved') : '');
   const [loading, setLoading] = useState(false);
   const [isPopupTooltipOpen, setIsPopupTooltipOpen] = useState(false);
   const [tooltipMessage, setTooltipMessage] = useState("");
-  const [isAddit, setIsAddit] = useState(0);
   const [totalMovies, setTotalMovies] = useState(0);
 
+  useEffect(() => {
+    const savedMovies = JSON.parse(localStorage.getItem('savedMovies'));
+    if (savedMovies) {
+      setMovies(savedMovies);
+      setAllMovies(savedMovies);
+    }
+  }, []);
 
   const updateWidth = () => {
     if (window.innerWidth < widthMiddle) {
-      setIsAddit(additColsSmall);
       setTotalMovies(moviesSmall)
     }
-    if (window.innerWidth > widthMiddle && window.innerWidth < widthGrande) {
-      setIsAddit(additColsMiddle);
+    if (window.innerWidth >= widthMiddle && window.innerWidth < widthGrande) {
       setTotalMovies(moviesMiddle)
     }
-    if (window.innerWidth > widthGrande) {
-      setIsAddit(additColsGrande);
+    if (window.innerWidth >= widthGrande) {
       setTotalMovies(moviesGrande)
     }
   };
@@ -62,13 +66,17 @@ function SavedMovies(isLoggedIn) {
     return () => window.removeEventListener("resize", updateWidth);
   });
 
-  // const [searchWord, setSearchWord] = useState("");
+  const [searchWord, setSearchWord] = useState("");
+
+  const saveSearchResults = (movies) => {
+    localStorage.setItem('searchResultSaved', JSON.stringify(movies));
+    setMovies(movies);
+  }
 
   const handleClick = (searchWord) => {
     updateWidth();
-
     setLoading(true);
-    // setSearchWord(""); // Очистить значение формы поиска
+    setSearchWord(""); // Очистить значение формы поиска
 
     moviesApi.getSavedMovies()
       .then((movies) => {
@@ -80,23 +88,28 @@ function SavedMovies(isLoggedIn) {
         return Search(movies, searchWord.toLowerCase(), isSwitched);
       })
       .then((searchResult) => {
-        setMovies(searchResult);
+        // setMovies(searchResult);
+        saveSearchResults(searchResult);
         if (searchResult.length == 0) {
           setIsPopupTooltipOpen(true);
           setTooltipMessage("Ничего не найдено");
         }
         localStorage.setItem('searchKeySaved', searchWord.toLowerCase());
-        setSearchKey(searchWord.toLowerCase());
+        setSearchKey(searchWord);
         localStorage.setItem('isSwitchedSaved', JSON.stringify(isSwitched));
         localStorage.setItem('searchResultSaved', JSON.stringify(movies));
+
       })
       .catch((error) => {
         console.log(`Error: ${error}`);
       })
       .finally(() => {
+        // setSearchKey("");
         setLoading(false);
       });
   }
+
+
 
   const closeTooltip = () => {
     setIsPopupTooltipOpen(!isPopupTooltipOpen);
@@ -125,18 +138,21 @@ function SavedMovies(isLoggedIn) {
     return <Preloader />;
   }
 
+
   return (
     <>
       <Header isLoggedIn={isLoggedIn} />
       <main>
         <SearchForm
-          clickHandler={(e) => handleClick(e.target.searchInput.value)}
+          // clickHandler={(e) => handleClick(e.target.searchInput.value)}
+          clickHandler={(e) => handleClick(searchKey, e)}
           switcherHandler={handleSwitcher}
           isSwitched={isSwitched}
           label={"Фильм"}
           search={searchKey}
-        // value={searchWord} // Добавляем значение из состояния searchWord
-        // onChange={(e) => setSearchWord(e.target.value)} // Обновляем значение в состоянии searchWord
+          setSearch={setSearchKey}
+          value={searchWord} // Добавляем значение из состояния searchWord
+          onChange={(e) => setSearchWord(e.target.value)} // Обновляем значение в состоянии searchWord
         />
 
         <MoviesCardList

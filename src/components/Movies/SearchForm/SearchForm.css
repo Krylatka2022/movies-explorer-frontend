@@ -48,6 +48,21 @@
   opacity: 0.6;
 }
 
+.search__error {
+  color: #ee3465;
+  font-size: 12px;
+  line-height: 1.21;
+  display: block;
+  min-height: 30px;
+  max-width: 358px;
+  visibility: hidden;
+  padding-top: 5px;
+}
+
+.search__error_visible {
+  visibility: visible;
+}
+
 .search__button {
   background-image: url("../../../images/find.svg");
   background-color: transparent;
@@ -73,6 +88,15 @@
   background-color: #424242;
   border: none;
   height: 1px;
+}
+
+.search__error-title {
+  color: #fff;
+  font-size: 22px;
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  padding-bottom: 23px;
 }
 
 @media (max-width: 1024px) {

@@ -27,6 +27,6 @@ export function useFormValidation(initialValues = {}) {
   }, [])
 
 
-  return { values, setValue, setValues, errors, isValid, setIsValid, handleChange, reset };
+  return { values, setValue, setValues, errors, setErrors, isValid, setIsValid, handleChange, reset };
 }
 

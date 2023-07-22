@@ -107,6 +107,16 @@
   color: #4285f4;
 }
 
+.profile__button_edit {
+  /* color: black; */
+}
+
+.profile__button_not-editing {
+  cursor: not-allowed;
+  background-color: #ddd;
+  color: #aaa;
+}
+
 .profile__button_logout {
   color: #ee3465;
 }

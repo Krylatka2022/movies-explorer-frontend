@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import SearchForm from './SearchForm/SearchForm';
 import Preloader from './Preloader/Preloader';
@@ -23,7 +24,8 @@ function Movies(isLoggedIn) {
   const [movies, setMovies] = useState(JSON.parse(localStorage.getItem('searchResult')) ? JSON.parse(localStorage.getItem('searchResult')) : []);
   const [allMovies, setAllMovies] = useState([]);
   const [isSwitched, setIsSwitched] = useState(JSON.parse(localStorage.getItem('isSwitched')));
-  const [searchKey, setSearchKey] = useState(localStorage.getItem('searchKey') ? localStorage.getItem('searchKey') : '');
+  // const [searchKey, setSearchKey] = useState(localStorage.getItem('searchKey') ? localStorage.getItem('searchKey') : '');
+  const [searchKey, setSearchKey] = useState(localStorage.getItem('searchKey') || '');
   const [loading, setLoading] = useState(false);
   const [isPopupTooltipOpen, setIsPopupTooltipOpen] = useState(false);
   const [tooltipMessage, setTooltipMessage] = useState("");
@@ -33,16 +35,16 @@ function Movies(isLoggedIn) {
 
   const updateWidth = () => {
     if (window.innerWidth < widthMiddle) {
-      setIsAddit(additColsSmall);
-      setTotalMovies(moviesSmall)
+      setIsAddit(additColsSmall);// загружаем ещё 2
+      setTotalMovies(moviesSmall) //выдаем 5
     }
-    if (window.innerWidth > widthMiddle && window.innerWidth < widthGrande) {
-      setIsAddit(additColsMiddle);
-      setTotalMovies(moviesMiddle)
+    if (window.innerWidth >= widthMiddle && window.innerWidth < widthGrande) { //больше 830 меньше 1280
+      setIsAddit(additColsMiddle);// загружаем ещё 2
+      setTotalMovies(moviesMiddle)//выдаем 8
     }
-    if (window.innerWidth > widthGrande) {
-      setIsAddit(additColsGrande);
-      setTotalMovies(moviesGrande)
+    if (window.innerWidth >= widthGrande) {
+      setIsAddit(additColsGrande);// загружаем ещё 3
+      setTotalMovies(moviesGrande)//выдаем 12
     }
   };
 
@@ -50,14 +52,19 @@ function Movies(isLoggedIn) {
     updateWidth();
   }, []);
 
-  useEffect(() => {
-    handleClick(searchKey);
-  }, [isSwitched]);
 
   useEffect(() => {
+    updateWidth();
     window.addEventListener("resize", updateWidth);
     return () => window.removeEventListener("resize", updateWidth);
-  });
+  }, []);
+
+
+
+  useEffect(() => {
+    handleClick(searchKey);
+
+  }, [isSwitched]);
 
   const handleCardLike = (card) => {
     // setLoading(true);
@@ -79,12 +86,48 @@ function Movies(isLoggedIn) {
       });
   }
 
+  // const handleCardLike = (movie) => {
+  //   const isLiked = savedMovies.some(savedMovie => savedMovie.movieId === movie.movieId);
+
+  //   if (isLiked) {
+  //     const savedMovie = savedMovies.find(savedMovie => savedMovie.movieId === movie.movieId);
+
+  //     moviesApi.removeFromSavedMovies(savedMovie._id)
+  //       .then((res) => {
+  //         if (!res) {
+  //           throw new Error("Error");
+  //         }
+
+  //         // Update the savedMovies state by filtering out the removed movie
+  //         const updatedSavedMovies = savedMovies.filter(savedMovie => savedMovie.movieId !== movie.movieId);
+  //         setSavedMovies(updatedSavedMovies);
+  //       })
+  //       .catch((error) => {
+  //         console.log(`Ошибка: ${error}`);
+  //       });
+  //   } else {
+  //     moviesApi.getSavedMovies(movie)
+  //       .then((res) => {
+  //         if (!res) {
+  //           throw new Error("Error");
+  //         }
+
+  //         // Update the savedMovies state by adding the newly saved movie
+  //         const updatedSavedMovies = [...savedMovies, res];
+  //         setSavedMovies(updatedSavedMovies);
+  //       })
+  //       .catch((error) => {
+  //         console.log(`Ошибка: ${error}`);
+  //       });
+  //   }
+  // }
 
   function handleMore() {
     setTotalMovies((totalMovies) => totalMovies + isAddit);
   }
 
-  const handleClick = (searchWord) => {
+
+  const handleClick = (searchWord, e) => {
     updateWidth();
     setLoading(true);
 
@@ -113,7 +156,7 @@ function Movies(isLoggedIn) {
       .then((saved) => {
         setSavedMovies(saved);
         localStorage.setItem('searchKey', searchWord.toLowerCase());
-        setSearchKey(searchWord.toLowerCase());
+        setSearchKey(searchWord);
         localStorage.setItem('isSwitched', JSON.stringify(isSwitched));
         localStorage.setItem('searchResult', JSON.stringify(movies));
       })
@@ -125,6 +168,7 @@ function Movies(isLoggedIn) {
       });
   }
 
+
   const closeTooltip = () => {
     setIsPopupTooltipOpen(!isPopupTooltipOpen);
   }
@@ -132,6 +176,7 @@ function Movies(isLoggedIn) {
   function handleSwitcher() {
     setIsSwitched(!isSwitched);
   }
+
 
   const handleCardDelete = (_id) => {
     moviesApi.removeFromSavedMovies(_id)
@@ -150,6 +195,8 @@ function Movies(isLoggedIn) {
       });
   }
 
+
+
   if (loading) {
     return <Preloader />;
   }
@@ -159,11 +206,14 @@ function Movies(isLoggedIn) {
       <Header isLoggedIn={isLoggedIn} />
       <main>
         <SearchForm
-          clickHandler={(e) => handleClick(e.target.searchInput.value)}
+          // clickHandler={(e) => handleClick(e.target.searchInput.value)}
+          clickHandler={(e) => handleClick(searchKey, e)}
           switcherHandler={handleSwitcher}
           isSwitched={isSwitched}
           label={"Фильм"}
           search={searchKey}
+          setSearch={setSearchKey}
+        // clickHandler={handleClick}
         />
         {(movies.length != 0) &&
           <MoviesCardList

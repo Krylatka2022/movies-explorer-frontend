@@ -1,4 +1,4 @@
-const widthMiddle = 830;
+const widthMiddle = 768;
 const widthGrande = 1280;
 const additColsSmall = 2;
 const additColsMiddle = 2;

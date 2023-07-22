@@ -1,6 +1,6 @@
 import './Auth.css';
 import { Link, useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useFormValidation } from '../../utils/useFormValidation';
 
 
@@ -11,9 +11,14 @@ function Register({ isLoggedIn, onRegister }) {
   const { values, errors, reset, handleChange } = useFormValidation();
   const errorClassName = (name) => `auth__error ${errors[name] ? 'auth__error_visible' : ''}`
 
-
   useEffect(() => {
     document.title = 'Регистрация';
+  }, []);
+
+  const [isFormValid, setIsFormValid] = useState(false);
+
+  const handleFormValid = useCallback((event) => {
+    setIsFormValid(event.target.closest('form').checkValidity());
   }, []);
 
 
@@ -32,11 +37,12 @@ function Register({ isLoggedIn, onRegister }) {
     onRegister(values)
   }
 
+
   return (
     <section className="auth">
       <Link to="/" className="auth__logo" alt="Логотип сайта"></Link>
       <h1 className="auth__title">Добро пожаловать!</h1>
-      <form className="auth__inputs" onSubmit={handleSubmit} >
+      <form className="auth__inputs" onSubmit={handleSubmit} onChange={handleFormValid}>
         <fieldset className="auth__items">
           <label className="auth__item">
             <p className="auth__item-label">Имя</p>
@@ -51,7 +57,7 @@ function Register({ isLoggedIn, onRegister }) {
               required
               value={values.name || ''}
               onChange={handleChange}
-
+              pattern="^[a-zA-Zа-яА-ЯёЁ\s\-]+$"
             />
             <span className={errorClassName('name')} id="inputName-error">{errors['name']}</span>
 
@@ -67,6 +73,7 @@ function Register({ isLoggedIn, onRegister }) {
               value={values.email || ''}
               onChange={handleChange}
               required
+              pattern="^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,4}$"
             />
             <span className={errorClassName('email')} id="inputEmail-error">{errors['email']}</span>
 
@@ -89,7 +96,12 @@ function Register({ isLoggedIn, onRegister }) {
 
           </label>
         </fieldset>
-        <button className='auth__button' type="submit">Зарегистрироваться</button>
+
+        <button
+          className={`auth__button ${isFormValid ? '' : 'auth__button_disabled'} `}
+          type="submit" disabled={!isFormValid}>
+          Зарегистрироваться
+        </button>
       </form>
       <p className="auth__text">Уже зарегистрированы?
         <Link to="/signin" className='auth__link'>Войти</Link></p>

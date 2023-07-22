@@ -1,8 +1,8 @@
 .movies {
   background-color: #202020;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  /* grid-template-columns: repeat(auto-fit, minmax(330px, 1fr)); */
+  /* grid-template-columns: repeat(3, 1fr); */
+  grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
   column-gap: 24px;
   row-gap: 30px;
   margin: 64px 70px 65px;
@@ -80,8 +80,8 @@
     margin-left: 31px;
     margin-right: 31px;
     margin-bottom: 48px;
-    /* grid-template-columns: repeat(auto-fit, minmax(317px, 1fr)); */
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(317px, 1fr));
+    /* grid-template-columns: repeat(2, 1fr); */
   }
 }
 

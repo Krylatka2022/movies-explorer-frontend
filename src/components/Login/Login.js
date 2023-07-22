@@ -1,5 +1,5 @@
 import '../Register/Auth.css';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useFormValidation } from '../../utils/useFormValidation';
 
@@ -8,6 +8,8 @@ const Login = ({ onLogin, isLoading, isLoggedIn }) => {
   const { values, errors, reset, handleChange } = useFormValidation();
   const errorClassName = (name) => `auth__error ${errors[name] ? 'auth__error_visible' : ''}`
   const navigate = useNavigate();
+  const [isFormValid, setIsFormValid] = useState(false);
+
 
   useEffect(() => {
     document.title = 'Авторизация';
@@ -21,6 +23,11 @@ const Login = ({ onLogin, isLoading, isLoggedIn }) => {
 
   useEffect(() => reset({}, {}, false), []);
 
+  const handleFormValid = useCallback((event) => {
+    setIsFormValid(event.target.closest('form').checkValidity());
+  }, []);
+
+
   function handleSubmit(e) {
     e.preventDefault();
     onLogin(values)
@@ -31,8 +38,7 @@ const Login = ({ onLogin, isLoading, isLoggedIn }) => {
       <h2 className="auth__title">Рады видеть!</h2>
 
       <form className="auth__inputs" onSubmit={handleSubmit}
-        onChange={handleChange}
-        isloading={isLoading.toString()}>
+        onChange={handleFormValid} isloading={isLoading.toString()}>
         <div className="auth__items">
           <label className="auth__item">
             <p className="auth__item-label">E-mail</p>
@@ -45,6 +51,7 @@ const Login = ({ onLogin, isLoading, isLoggedIn }) => {
               value={values.email || ''}
               required
               onChange={handleChange}
+              pattern="^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,4}$"
             />
             <span className={errorClassName('email')} id="inputEmail-error">{errors['email']}</span>
           </label>
@@ -65,7 +72,9 @@ const Login = ({ onLogin, isLoading, isLoggedIn }) => {
             <span className={errorClassName('password')} id="inputPassword-error">{errors['password']}</span>
           </label>
         </div>
-        <button className="auth__button" type="submit">Войти</button>
+        <button
+          className={`auth__button ${isFormValid ? '' : 'auth__button_disabled'} `}
+          type="submit" disabled={!isFormValid}>Войти</button>
       </form>
       <p className="auth__text">Ещё не зарегистрированы?
         <Link to="/signup" className="auth__link">Регистрация</Link>

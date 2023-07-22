@@ -1,3 +1,4 @@
+
 import React, { useState, useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
@@ -8,7 +9,7 @@ import './Profile.css';
 
 function Profile({ isLoggedIn, logOut, changeProfile, isLoading }) {
   const currentUser = useContext(CurrentUserContext);
-  const { values, errors, isValid, handleChange, setValue, setIsValid, reset } = useFormValidation();
+  const { values, errors, setErrors, isValid, setValue, setIsValid, reset } = useFormValidation();
   const [isEditing, setIsEditing] = useState(false);
 
 
@@ -46,18 +47,22 @@ function Profile({ isLoggedIn, logOut, changeProfile, isLoading }) {
     setIsEditing(!isEditing)
   }
 
-
+  const [isFormModified, setIsFormModified] = useState(false);
+  const [initialValues, setInitialValues] = useState({});
   useEffect(() => {
     if (currentUser) {
       setValue("userName", currentUser.name);
       setValue("userEmail", currentUser.email);
+      setInitialValues({
+        userName: currentUser.name,
+        userEmail: currentUser.email,
+      });
+      setIsFormModified(false); // Add this line to reset form modification status
     }
     if (currentUser.name && currentUser.email) {
       setIsValid(true);
     }
   }, [currentUser, setValue, setIsValid]);
-
-
 
   function handleClick(e) {
     e.preventDefault();
@@ -72,15 +77,13 @@ function Profile({ isLoggedIn, logOut, changeProfile, isLoading }) {
     }
   }
 
-  // function handleClick(e) {
-  //   e.preventDefault();
-
-  //   setIsEditing(isEditing);
-  //   setValue("userName", currentUser.name);
-  //   setValue("userEmail", currentUser.email);
-  // }
-
-
+  function handleChange(e) {
+    const { name, value } = e.target;
+    setValue(name, value);
+    setErrors({ ...errors, [name]: e.target.validationMessage });
+    // setIsFormModified(values.userName !== initialValues.userName || values.userEmail !== initialValues.userEmail);
+    setIsFormModified(value !== currentUser[name]);
+  }
 
   function handleLogout(e) {
     e.preventDefault();
@@ -138,8 +141,12 @@ function Profile({ isLoggedIn, logOut, changeProfile, isLoading }) {
             </ul>
             <div className="profile__form-buttons">
               {isEditing ? (
-                <button className={`profile__button ${isValid ? "profile__button_save" : "profile__button_edit"}`} type="submit" onClick={handleClick}>
-                  {isValid ? "Сохранить" : "Заполните поля"}
+                <button
+                  className={`profile__button ${isEditing ? (isFormModified && isValid ? "profile__button_save" : "profile__button_edit") : "profile__button_not-editing"}`}
+                  type="submit"
+                  onClick={handleClick}
+                  disabled={!isEditing || (isEditing && !isFormModified) || (isEditing && !isValid)}                >
+                  {isEditing ? (isFormModified && isValid ? "Сохранить" : "Заполните поля") : "Редактировать"}
                 </button>
               ) : (
                 <button className="profile__button profile__button_edit" type="button"
