@@ -122,8 +122,23 @@ function Movies(isLoggedIn) {
   //   }
   // }
 
+
+  // function handleMore() {
+  //   setTotalMovies((totalMovies) => totalMovies + isAddit);
+  // }
+
+
   function handleMore() {
-    setTotalMovies((totalMovies) => totalMovies + isAddit);
+    let cardsToAdd = 0;
+    if (window.innerWidth < widthMiddle) {
+      cardsToAdd = additColsSmall;
+    } else if (window.innerWidth >= widthMiddle && window.innerWidth < widthGrande) {
+      cardsToAdd = additColsMiddle;
+    } else {
+      cardsToAdd = additColsGrande;
+    }
+
+    setTotalMovies((totalMovies) => totalMovies + cardsToAdd);
   }
 
 

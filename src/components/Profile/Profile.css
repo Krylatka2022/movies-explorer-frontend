@@ -113,8 +113,8 @@
 
 .profile__button_not-editing {
   cursor: not-allowed;
-  background-color: #ddd;
-  color: #aaa;
+  /* background-color: #ddd;
+  color: #aaa; */
 }
 
 .profile__button_logout {
