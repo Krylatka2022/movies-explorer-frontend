@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import Preloader from "../Movies/Preloader/Preloader";
 import SearchForm from "../Movies/SearchForm/SearchForm";
@@ -12,9 +13,6 @@ import "./SavedMovies.css";
 import {
   widthMiddle,
   widthGrande,
-  additColsSmall,
-  additColsMiddle,
-  additColsGrande,
   moviesSmall,
   moviesMiddle,
   moviesGrande,

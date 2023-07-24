@@ -1,4 +1,5 @@
 
+
 import React, { useState, useEffect } from 'react';
 import SearchForm from './SearchForm/SearchForm';
 import Preloader from './Preloader/Preloader';
@@ -32,6 +33,7 @@ function Movies(isLoggedIn) {
   const [isAddit, setIsAddit] = useState(0);
   const [totalMovies, setTotalMovies] = useState(0);
   const [savedMovies, setSavedMovies] = useState([]);
+  const [displayedMovies, setDisplayedMovies] = useState([]);
 
   const updateWidth = () => {
     if (window.innerWidth < widthMiddle) {
@@ -139,7 +141,17 @@ function Movies(isLoggedIn) {
     }
 
     setTotalMovies((totalMovies) => totalMovies + cardsToAdd);
+    // setDisplayedMovies(movies.slice(0, totalMovies + cardsToAdd));
+    // setTotalMovies((totalMovies) => totalMovies + cardsToAdd);
+    // }
+    // setDisplayedMovies(movies.slice(0, totalMovies + cardsToAdd));
+    // setTotalMovies((prevTotalMovies) => prevTotalMovies + cardsToAdd);
   }
+
+
+  useEffect(() => {
+    setDisplayedMovies(movies.slice(0, totalMovies));
+  }, [movies, totalMovies]);
 
 
   const handleClick = (searchWord, e) => {
@@ -211,7 +223,6 @@ function Movies(isLoggedIn) {
   }
 
 
-
   if (loading) {
     return <Preloader />;
   }
@@ -230,16 +241,19 @@ function Movies(isLoggedIn) {
           setSearch={setSearchKey}
         // clickHandler={handleClick}
         />
-        {(movies.length != 0) &&
+        {(displayedMovies.length !== 0) && (
           <MoviesCardList
+            // {(movies.length != 0) &&
+            //   <MoviesCardList
             movies={movies.slice(0, totalMovies)}
+            // movies={displayedMovies}
             onCardLike={handleCardLike}
             onCardDelete={handleCardDelete}
             savedMovies={savedMovies}
             mode='all'
           />
 
-        }
+        )}
         {(movies.length > totalMovies)
           &&
           <div className='movies__button' onClick={handleMore}>

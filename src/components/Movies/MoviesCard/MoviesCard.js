@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useCallback } from "react";
 import likeImg from "../../../images/save9.svg";
 import deleteImg from "../../../images/delete-movie.svg";
@@ -43,6 +44,26 @@ export const MoviesCard = ({
     setisLiked(!isLiked);
   };
 
+  // const handleCardLike = () => {
+  //   if (isLiked) {
+  //     onCardDelete(id)
+  //       .then(() => {
+  //         setisLiked(false);
+  //       })
+  //       .catch((error) => {
+  //         console.error("Error deleting the movie:", error);
+  //       });
+  //   } else {
+  //     onCardLike(movie)
+  //       .then(() => {
+  //         setisLiked(true);
+  //       })
+  //       .catch((error) => {
+  //         console.error("Error liking the movie:", error);
+  //       });
+  //   }
+  // };
+
   return (
     <section>
       <article className="movie" >
@@ -76,3 +97,89 @@ export const MoviesCard = ({
 };
 
 export default MoviesCard;
+
+// export const MoviesCard = ({
+//   movie,
+//   savedMovies,
+//   onCardLike,
+//   mode,
+//   onCardDelete
+// }) => {
+//   const [isLiked, setisLiked] = useState(false);
+//   const [id, setId] = useState('');
+
+//   function handleDuration(minutes) {
+//     let mins = minutes % 60;
+//     let hours = Math.floor(minutes / 60);
+//     if (hours > 0) { return hours + ' h. ' + mins + ' min.'; }
+//     else { return minutes + ' min.'; }
+//   }
+
+//   useEffect(() => {
+//     checkLike();
+//   }, [savedMovies]);
+
+//   const checkLike = useCallback(() => {
+//     const likedMovie = savedMovies.find(savedMovie => savedMovie._id === movie._id);
+//     if (likedMovie) {
+//       setisLiked(true);
+//       setId(likedMovie._id);
+//     } else {
+//       setisLiked(false);
+//       setId('');
+//     }
+//   }, [movie, savedMovies]);
+
+//   const handleCardLike = () => {
+//     if (isLiked) {
+//       onCardDelete(id)
+//         .then(() => {
+//           setisLiked(false);
+//         })
+//         .catch((error) => {
+//           console.error("Error deleting the movie:", error);
+//         });
+//     } else {
+//       onCardLike(movie)
+//         .then(() => {
+//           setisLiked(true);
+//         })
+//         .catch((error) => {
+//           console.error("Error liking the movie:", error);
+//         });
+//     }
+//   };
+
+//   return (
+//     <section>
+//       <article className="movie">
+//         <div className="movie__element">
+//           <div className="movie__title-duration">
+//             <h2 className="movie__title">{movie.nameEN}</h2>
+//             <p className="movie__duration">{handleDuration(movie.duration)}</p>
+//           </div>
+//           <button
+//             className="movie__save-button"
+//             type="button"
+//             onClick={handleCardLike}
+//           >
+//             {isLiked ?
+//               <img src={mode === "all" ? likeImg : deleteImg} alt="Liked" />
+//               :
+//               <img src={mode === "all" ? disLikeImg : deleteImg} alt="Not liked" />
+//             }
+//           </button>
+//         </div>
+//         <a href={movie.trailerLink} className="movie__image-content" target="_blank" rel="noreferrer">
+//           <img
+//             src={mode === "all" ? `https ://api.nomoreparties.co/${movie.image.url}` : movie.image}
+//             className="movie__image"
+//             alt={`foto ${movie.nameEN}`}
+//           />
+//         </a>
+//       </article>
+//     </section>
+//   );
+// };
+
+// export default MoviesCard;

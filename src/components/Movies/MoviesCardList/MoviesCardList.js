@@ -1,4 +1,5 @@
 
+
 import React from "react";
 import MoviesCard from "../MoviesCard/MoviesCard";
 import "./MoviesCardList.css";
@@ -16,8 +17,8 @@ export const MoviesCardList = ({
       {movies.map((movie) => {
         return (<MoviesCard
           movie={movie}
-          // key={movie._id} //постоянно ошибка
-          key={Math.random(1000000)}
+          key={movie.id} //постоянно ошибка
+          // key={Math.random(1000000)}
           mode={mode}
           savedMovies={savedMovies}
           onCardLike={(card) => { onCardLike(card); }}
