@@ -107,8 +107,6 @@ function SavedMovies(isLoggedIn) {
       });
   }
 
-
-
   const closeTooltip = () => {
     setIsPopupTooltipOpen(!isPopupTooltipOpen);
   }
@@ -116,6 +114,53 @@ function SavedMovies(isLoggedIn) {
   function handleSwitcher() {
     setIsSwitched(!isSwitched);
   }
+
+  // const handleCardDelete = (_id) => {
+  //   moviesApi.removeFromSavedMovies(_id)
+  //     .then((res) => {
+  //       handleClick(searchKey)
+
+  //       if (!res) {
+  //         throw new Error("Error");
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.log(`Ошибка: ${error}`);
+  //     });
+  // }
+  const [savedMovies, setSavedMovies] = useState([]);
+  // const handleCardDelete = (_id) => {
+  //   moviesApi.removeFromSavedMovies(_id)
+  //     .then(() => {
+
+
+  //       // Fetch the updated list of saved movies after the deletion
+  //       return moviesApi.getSavedMovies();
+  //     })
+  //     .then((saved) => {
+  //       JSON.stringify(saved);
+
+
+  //       setSavedMovies(saved); // Update the savedMovies state with the updated list
+  //     })
+  //     .catch((error) => {
+
+
+  //       console.log(`Ошибка: ${error}`);
+  //     });
+  // };
+
+
+  // const handleCardDelete = (id) => {
+  //   moviesApi.removeFromSavedMovies(id)
+  //     .then(() => {
+  //       // Remove the movie from the savedMovies state
+  //       setSavedMovies(savedMovies.filter((movie) => movie.id !== id));
+  //     })
+  //     .catch((error) => {
+  //       console.log(`Ошибка: ${error}`);
+  //     });
+  // };
 
   const handleCardDelete = (_id) => {
     moviesApi.removeFromSavedMovies(_id)
@@ -125,12 +170,13 @@ function SavedMovies(isLoggedIn) {
         if (!res) {
           throw new Error("Error");
         }
+        setSavedMovies(savedMovies.filter((movie) => movie._id !== _id));
+
       })
       .catch((error) => {
         console.log(`Ошибка: ${error}`);
       });
   }
-
 
   if (loading) {
     return <Preloader />;
@@ -157,6 +203,7 @@ function SavedMovies(isLoggedIn) {
           movies={movies}
           savedMovies={allMovies}
           onCardLike={handleCardDelete}
+
           // mode='saved'
           onCardDelete={handleCardDelete}
         />

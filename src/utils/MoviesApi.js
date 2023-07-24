@@ -35,7 +35,7 @@ class MoviesApi {
   }
 
 
-  handleLike = (card) => {
+  handleLike = (movie) => {
     return fetch(`${baseUrl2}/movies`, {
       method: "POST",
       credentials: 'include',
@@ -45,17 +45,17 @@ class MoviesApi {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        country: card.country,
-        director: card.director,
-        duration: card.duration,
-        year: card.year,
-        description: card.description,
-        image: 'https://api.nomoreparties.co' + card.image.url,
-        trailerLink: card.trailerLink,
-        thumbnail: `${baseUrl}` + card.image.formats.thumbnail.hash + card.image.formats.thumbnail.ext,
-        movieId: card.id,
-        nameRU: card.nameRU,
-        nameEN: card.nameEN,
+        country: movie.country,
+        director: movie.director,
+        duration: movie.duration,
+        year: movie.year,
+        description: movie.description,
+        image: 'https://api.nomoreparties.co' + movie.image.url,
+        trailerLink: movie.trailerLink,
+        thumbnail: `${baseUrl}` + movie.image.formats.thumbnail.hash + movie.image.formats.thumbnail.ext,
+        movieId: movie.id,
+        nameRU: movie.nameRU,
+        nameEN: movie.nameEN,
       }),
     })
       .then((res) => this._checkResponse(res));

@@ -17,15 +17,17 @@ export const MoviesCardList = ({
       {movies.map((movie) => {
         return (<MoviesCard
           movie={movie}
-          key={movie.id} //постоянно ошибка
+          key={movie._id}
+          // key={movie.id || movie.movieId} //постоянно ошибка
           // key={Math.random(1000000)}
           mode={mode}
           savedMovies={savedMovies}
-          onCardLike={(card) => { onCardLike(card); }}
-          onCardDelete={(card) => { onCardDelete(card); }}
+          onCardLike={(movie) => { onCardLike(movie); }}
+          onCardDelete={(movie) => { onCardDelete(movie); }}
         // onCardLike={onCardLike}
         // handleCardDelete={onCardDelete}
-        // liked={savedMovies.some((savedMovie) => savedMovie._id === movie._id)}
+        // liked={savedMovies.some((savedMovie) => savedMovie.id === movie.id)}
+        // onCardDelete={onCardDelete}
         />)
       })
       }

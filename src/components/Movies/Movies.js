@@ -68,67 +68,6 @@ function Movies(isLoggedIn) {
 
   }, [isSwitched]);
 
-  const handleCardLike = (card) => {
-    // setLoading(true);
-    moviesApi.handleLike(card)
-      .then((res) => {
-        card._id = res._id;
-        if (!res) {
-          throw new Error("Error");
-        }
-        return moviesApi.getSavedMovies();
-      })
-      .then((saved) => {
-        JSON.stringify(saved);
-        setSavedMovies(saved);
-      })
-      .catch((error) => {
-        console.log(`Error: ${error}`);
-        if (error.status == 401) mainApi.signOut();
-      });
-  }
-
-  // const handleCardLike = (movie) => {
-  //   const isLiked = savedMovies.some(savedMovie => savedMovie.movieId === movie.movieId);
-
-  //   if (isLiked) {
-  //     const savedMovie = savedMovies.find(savedMovie => savedMovie.movieId === movie.movieId);
-
-  //     moviesApi.removeFromSavedMovies(savedMovie._id)
-  //       .then((res) => {
-  //         if (!res) {
-  //           throw new Error("Error");
-  //         }
-
-  //         // Update the savedMovies state by filtering out the removed movie
-  //         const updatedSavedMovies = savedMovies.filter(savedMovie => savedMovie.movieId !== movie.movieId);
-  //         setSavedMovies(updatedSavedMovies);
-  //       })
-  //       .catch((error) => {
-  //         console.log(`Ошибка: ${error}`);
-  //       });
-  //   } else {
-  //     moviesApi.getSavedMovies(movie)
-  //       .then((res) => {
-  //         if (!res) {
-  //           throw new Error("Error");
-  //         }
-
-  //         // Update the savedMovies state by adding the newly saved movie
-  //         const updatedSavedMovies = [...savedMovies, res];
-  //         setSavedMovies(updatedSavedMovies);
-  //       })
-  //       .catch((error) => {
-  //         console.log(`Ошибка: ${error}`);
-  //       });
-  //   }
-  // }
-
-
-  // function handleMore() {
-  //   setTotalMovies((totalMovies) => totalMovies + isAddit);
-  // }
-
 
   function handleMore() {
     let cardsToAdd = 0;
@@ -141,11 +80,6 @@ function Movies(isLoggedIn) {
     }
 
     setTotalMovies((totalMovies) => totalMovies + cardsToAdd);
-    // setDisplayedMovies(movies.slice(0, totalMovies + cardsToAdd));
-    // setTotalMovies((totalMovies) => totalMovies + cardsToAdd);
-    // }
-    // setDisplayedMovies(movies.slice(0, totalMovies + cardsToAdd));
-    // setTotalMovies((prevTotalMovies) => prevTotalMovies + cardsToAdd);
   }
 
 
@@ -204,10 +138,33 @@ function Movies(isLoggedIn) {
     setIsSwitched(!isSwitched);
   }
 
+  // const handleCardLike = (movie) => {
+  //   moviesApi.handleLike(movie)
+  //     .then((res) => {
+  //       movie._id = res._id;
+  //       if (!res) {
 
-  const handleCardDelete = (_id) => {
-    moviesApi.removeFromSavedMovies(_id)
+
+  //         throw new Error("Error");
+  //       }
+  //       const movieExists = savedMovies.some((savedMovie) => savedMovie._id === res._id);
+  //       if (!movieExists) {
+  //         setSavedMovies([...savedMovies, movie]);
+  //       }
+  //     })
+  //     .catch((error) => {
+
+
+  //       console.log(`Error: ${error}`);
+  //       if (error.status === 401) mainApi.signOut();
+  //     });
+  // };
+
+  const handleCardLike = (card) => {
+    // setLoading(true);
+    moviesApi.handleLike(card)
       .then((res) => {
+        card._id = res._id;
         if (!res) {
           throw new Error("Error");
         }
@@ -218,10 +175,26 @@ function Movies(isLoggedIn) {
         setSavedMovies(saved);
       })
       .catch((error) => {
-        console.log(`Ошибка: ${error}`);
+        console.log(`Error: ${error}`);
+        if (error.status == 401) mainApi.signOut();
       });
   }
 
+
+  const handleCardDelete = (_id) => {
+    moviesApi.removeFromSavedMovies(_id)
+      .then(() => {
+
+
+        // Remove the movie from the savedMovies state
+        // setSavedMovies(savedMovies.filter((movie) => movie._id !== _id));
+      })
+      .catch((error) => {
+
+
+        console.log(`Ошибка: ${error}`);
+      });
+  };
 
   if (loading) {
     return <Preloader />;
@@ -241,10 +214,9 @@ function Movies(isLoggedIn) {
           setSearch={setSearchKey}
         // clickHandler={handleClick}
         />
-        {(displayedMovies.length !== 0) && (
+
+        {(movies.length != 0) &&
           <MoviesCardList
-            // {(movies.length != 0) &&
-            //   <MoviesCardList
             movies={movies.slice(0, totalMovies)}
             // movies={displayedMovies}
             onCardLike={handleCardLike}
@@ -253,7 +225,7 @@ function Movies(isLoggedIn) {
             mode='all'
           />
 
-        )}
+        }
         {(movies.length > totalMovies)
           &&
           <div className='movies__button' onClick={handleMore}>
