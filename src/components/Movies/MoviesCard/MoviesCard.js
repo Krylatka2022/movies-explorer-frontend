@@ -1,47 +1,111 @@
-import './MoviesCard.css';
-import { useState } from 'react';
-import { useLocation } from 'react-router-dom';
 
-function MoviesCard({ movie, onDelete }) {
-  const [select, setSelect] = useState(false);
-  const location = useLocation();
-  const isSavedMovies = location.pathname === '/saved-movies';
+import React, { useState, useEffect, useCallback } from "react";
+import likeImg from "../../../images/save9.svg";
+import deleteImg from "../../../images/delete-movie.svg";
+import disLikeImg from "../../../images/save9d.svg";
+import "./MoviesCard.css";
 
-  function handleSelect() {
-    setSelect(!select);
+export const MoviesCard = ({
+  movie,
+  savedMovies,
+  onCardLike,
+  mode,
+  onCardDelete }) => {
+
+  const [isLiked, setisLiked] = useState(false);
+  const [id, setId] = useState('');
+
+  function handleDuration(minutes) {
+    let mins = minutes % 60;
+    let hours = Math.floor(minutes / 60);
+    if (hours > 0) { return hours + ' h. ' + mins + ' min.'; }
+    else { return minutes + ' min.'; }
   }
 
-  function handleDelete() {
-    onDelete(movie);
-  }
+  useEffect(() => {
+    checkLike();
+  }, [movie, savedMovies]);
 
+  // const checkLike = () => {
+
+
+  //   let likedMovie = savedMovies.find(
+  //     (savedMovie) => savedMovie._id === movie._id
+  //   );
+  //   setisLiked(!!likedMovie);
+  // };
+
+  const checkLike = useCallback(async () => {
+    let likedMovie = savedMovies.filter((savedMovie) => (savedMovie.nameRU == movie.nameRU) || (savedMovie.nameEN == movie.nameEN))
+    if (likedMovie.length != 0) {
+      setisLiked(true);
+      setId(likedMovie[0]._id);
+    }
+  }, []);
+
+  const handleCardLike = () => {
+    if (isLiked) {
+      try {
+        onCardDelete(movie._id);
+        setisLiked(false);
+      } catch (error) {
+
+
+        console.error("Error deleting the movie:", error);
+      }
+    } else {
+      try {
+        onCardLike(movie);
+        setisLiked(true);
+      } catch (error) {
+
+
+        console.error("Error liking the movie:", error);
+      }
+    }
+  };
+
+  // const handleCardLike = () => {
+  //   if (isLiked) {
+  //     onCardDelete(id);
+  //   }
+  //   else {
+  //     onCardLike(movie);
+  //   }
+  //   setisLiked(!isLiked);
+  // };
   return (
-    <article className='movie'>
-      <div className='movie__element'>
-        <div className='movie__title-duration'>
-          <h2 className='movie__title'>{movie.name}</h2>
-          <p className='movie__duration'>{movie.duration}</p>
-        </div>
-
-        {isSavedMovies ? (
-          <button className={`movie__save-button movie__save-button_delete`} type="button" onClick={handleDelete}>
-
-          </button>
-        ) : (
+    <section>
+      <article className="movie" >
+        <div className="movie__element">
+          <div className="'movie__title-duration">
+            <h2 className="movie__title">{movie.nameEN}</h2>
+            <p className="movie__duration">{handleDuration(movie.duration)}</p>
+          </div>
           <button
-            className={`movie__save-button ${select ? 'movie__save-button_active' : ''}`}
+            className="movie__save-button"
             type="button"
-            onClick={handleSelect}
+            // onClick={(e) => { handleCardLike(e); }}
+            onClick={handleCardLike}
+
           >
-            {movie.saved ? '' : ''}
+            {isLiked ?
+              <img src={mode == "all" ? likeImg : deleteImg} />
+              :
+              <img src={mode == "all" ? disLikeImg : deleteImg} />
+            }
           </button>
-        )}
-      </div>
-      <a className="movie__image-content" href="#" target="_blank" rel="noreferrer">
-        <img className='movie__image' src={movie.image} alt={movie.name} onClick={handleSelect} />
-      </a>
-    </article>
+        </div>
+        <a href={movie.trailerLink} className="movie__image-content" target="_blank" rel="noreferrer">
+          <img
+            src={mode == "all" ? `https://api.nomoreparties.co/${movie.image.url}` : movie.image}
+            className="movie__image"
+            alt={`foto ${movie.nameEN}`}
+          />
+        </a>
+      </article>
+    </section>
   );
-}
+};
 
 export default MoviesCard;

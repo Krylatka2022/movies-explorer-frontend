@@ -1,110 +1,114 @@
 import './Auth.css';
-import { Link } from 'react-router-dom';
-// import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useState, useEffect, useCallback } from 'react';
 import { useFormValidation } from '../../utils/useFormValidation';
 
 
-function Register({ onRegister }) {
-  // const formRef = useRef(null);
-  // const [name, setName] = useState('');
-  // const [email, setEmail] = useState('');
-  // const [password, setPassword] = useState('');
-  const { values, errors, isValid, handleChange, reset } = useFormValidation({});
 
-  const handleSubmit = event => {
-    event.preventDefault();
-    onRegister({
-      name: values.name,
-      email: values.email,
-      password: values.password
-    });
+function Register({ isLoggedIn, onRegister }) {
 
-    // const handleSubmit = event => {
-    //   event.preventDefault();
-    //   onRegister({
-    //     name: name,
-    //     email: email,
-    //     password: password
-    //   });
+  const navigate = useNavigate();
+  const { values, errors, reset, handleChange } = useFormValidation();
+  const errorClassName = (name) => `auth__error ${errors[name] ? 'auth__error_visible' : ''}`
 
-    // formRef.current.reset(); // Сброс формы после успешной отправки
-    // Сброс значений полей после успешной отправки
-    //   setName('');
-    //   setEmail('');
-    //   setPassword('');
-    //   reset();
+  useEffect(() => {
+    document.title = 'Регистрация';
+  }, []);
 
-  };
+  const [isFormValid, setIsFormValid] = useState(false);
+
+  const handleFormValid = useCallback((event) => {
+    setIsFormValid(event.target.closest('form').checkValidity());
+  }, []);
+
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate('/movies', { replace: true });
+    }
+  }, [isLoggedIn]);
+
+
+  useEffect(() => reset({}, {}, false), []);
+
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    onRegister(values)
+  }
+
 
   return (
     <section className="auth">
       <Link to="/" className="auth__logo" alt="Логотип сайта"></Link>
       <h1 className="auth__title">Добро пожаловать!</h1>
-      <form className="auth__inputs" onSubmit={handleSubmit} isValid={isValid} reset={reset}>
+      <form className="auth__inputs" onSubmit={handleSubmit} onChange={handleFormValid}>
         <fieldset className="auth__items">
           <label className="auth__item">
             <p className="auth__item-label">Имя</p>
             <input
               className="auth__input"
-              id='name'
+              id='inputName'
               name="name"
               type="text"
               placeholder="Имя"
               minLength="2"
               maxLength="30"
-              value={values.name || ''}
-              // value={name}
-              // defaultValue='Виталий'
-              onChange={handleChange}
-              // onChange={e => setName(e.target.value)}
               required
+              value={values.name || ''}
+              onChange={handleChange}
+              pattern="^[a-zA-Zа-яА-ЯёЁ\s\-]+$"
             />
-            <span className={`auth__error ${errors.name ? 'auth__error_visible' : ''}`}>{errors.name}</span>
+            <span className={errorClassName('name')} id="inputName-error">{errors['name']}</span>
+
           </label>
           <label className="auth__item">
             <p className="auth__item-label">E-mail</p>
             <input
               className={'auth__input'}
-              id='email'
+              id='inputEmail'
               name="email"
               type="email"
               placeholder="E-mail"
               value={values.email || ''}
-              // value={email}
-              // defaultValue='pochta@yandex.ru'
               onChange={handleChange}
-              // onChange={e => setEmail(e.target.value)}
               required
+              pattern="^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,4}$"
             />
-            <span className={`auth__error ${errors.email ? 'auth__error_visible' : ''}`}>{errors.email}</span>
+            <span className={errorClassName('email')} id="inputEmail-error">{errors['email']}</span>
+
           </label>
           <label className="auth__item">
             <p className="auth__item-label">Пароль</p>
             <input
               className={'auth__input auth__input_error'}
               name="password"
+              id='inputPassword'
               type="password"
               minLength="2"
               maxLength="30"
               placeholder="Пароль"
               value={values.password || ''}
-              // value={password}
-              // defaultValue='somepassword'
               onChange={handleChange}
-              // onChange={e => setPassword(e.target.value)}
               required
             />
-            <span className={`auth__error ${errors.password ? 'auth__error_visible' : ''}`}>{errors.password}Что-то пошло не так..</span>
+            <span className={errorClassName('password')} id="inputPassword-error">{errors['password']}</span>
+
           </label>
         </fieldset>
-        <button className='auth__button' type="submit">Зарегистрироваться</button>
+
+        <button
+          className={`auth__button ${isFormValid ? '' : 'auth__button_disabled'} `}
+          type="submit" disabled={!isFormValid}>
+          Зарегистрироваться
+        </button>
       </form>
       <p className="auth__text">Уже зарегистрированы?
         <Link to="/signin" className='auth__link'>Войти</Link></p>
-
     </section>
   );
 };
 
 export default Register;
+
 

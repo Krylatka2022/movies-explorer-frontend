@@ -129,6 +129,14 @@
   margin: 192px 0 15px;
 }
 
+.auth__button_disabled {
+  background-color: transparent;
+  color: #fff;
+  cursor: default;
+  pointer-events: none;
+  opacity: 0.2;
+}
+
 .auth__text {
   width: 100%;
   margin: 0;

@@ -3,7 +3,7 @@
   padding: 0;
   background-color: #222222;
   border-radius: 10px;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 .movie__element {
@@ -13,8 +13,16 @@
 
 .movie__image {
   width: 100%;
-  max-height: 203px;
-  object-fit: cover;
+  height: 203px;
+  /* object-fit: cover; */
+  object-fit: contain;
+  overflow: hidden;
+  box-shadow: 0 10px 20px rgba(74, 74, 74, 0.3);
+}
+
+.movie__image:hover {
+  transform: scale(1.1);
+  transition: 3s;
 }
 
 .movie_title-duration {
@@ -29,6 +37,10 @@
   margin: 0;
   padding-left: 14px;
   padding-top: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 291px;
+  text-overflow: ellipsis;
 }
 
 .movie__save-button {
@@ -67,10 +79,11 @@
 @media screen and (max-width: 768px) {
   .movie__title {
     padding-top: 13px;
+    max-width: 224px;
   }
 
   .movie__image {
-    max-height: 190px;
+    height: 190px;
   }
 
   .movie__save-button {

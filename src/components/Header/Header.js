@@ -6,11 +6,11 @@ import NavBar from '../Movies/NavBar/NavBar';
 
 function Header({ isLoggedIn }) {
   return (
-    <header className='header'>
+    <section className='header'>
       <Link to='/' className='header__logo' />
       {!isLoggedIn && <Navigation />}
       {isLoggedIn && <NavBar />}
-    </header>
+    </section>
   );
 };
 

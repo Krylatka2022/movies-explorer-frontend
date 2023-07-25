@@ -1,22 +1,37 @@
-import './MoviesCardList.css';
-import MoviesCard from '../MoviesCard/MoviesCard';
-import movies from '../../../utils/initialMovies';
 
-function MoviesCardList({ showMoreVisible, onDelete }) {
-  const handleDelete = (movie) => {
-    onDelete(movie);
-  };
+
+import React from "react";
+import MoviesCard from "../MoviesCard/MoviesCard";
+import "./MoviesCardList.css";
+
+export const MoviesCardList = ({
+  movies,
+  savedMovies,
+  mode,
+  onCardDelete,
+  onCardLike
+}) => {
 
   return (
     <section className="movies">
-      {movies.map((movie, i) => (
-        <MoviesCard key={i} movie={movie} onDelete={handleDelete} />
-      ))}
-      {showMoreVisible ? (
-        <button className="movies__button" type="button">Ещё</button>
-      ) : (
-        <button className="movies__button-placeholder"></button>
-      )}    </section>
+      {movies.map((movie) => {
+        return (<MoviesCard
+          movie={movie}
+          key={movie._id}
+          // key={movie.id || movie.movieId} //постоянно ошибка
+          // key={Math.random(1000000)}
+          mode={mode}
+          savedMovies={savedMovies}
+          onCardLike={(movie) => { onCardLike(movie); }}
+          onCardDelete={(movie) => { onCardDelete(movie); }}
+        // onCardLike={onCardLike}
+        // handleCardDelete={onCardDelete}
+        // liked={savedMovies.some((savedMovie) => savedMovie.id === movie.id)}
+        // onCardDelete={onCardDelete}
+        />)
+      })
+      }
+    </section>
   );
 };
 

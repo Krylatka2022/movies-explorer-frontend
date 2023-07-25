@@ -1,67 +1,86 @@
-import { Link } from 'react-router-dom';
-import { useRef } from 'react';
 import '../Register/Auth.css';
+import { useState, useEffect, useCallback } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { useFormValidation } from '../../utils/useFormValidation';
 
 
-function Login({ onLogin }) {
-  const formRef = useRef(null);
-  const { values, errors, isValid, handleChange } = useFormValidation({});
+const Login = ({ onLogin, isLoading, isLoggedIn }) => {
+  const { values, errors, reset, handleChange } = useFormValidation();
+  const errorClassName = (name) => `auth__error ${errors[name] ? 'auth__error_visible' : ''}`
+  const navigate = useNavigate();
+  const [isFormValid, setIsFormValid] = useState(false);
 
-  const handleSubmit = event => {
-    event.preventDefault();
-    onLogin({
-      email: values.email,
-      password: values.password
-    });
-  };
 
+  useEffect(() => {
+    document.title = 'Авторизация';
+  }, []);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate('/movies', { replace: true });
+    }
+  }, [isLoggedIn, navigate]);
+
+  useEffect(() => reset({}, {}, false), []);
+
+  const handleFormValid = useCallback((event) => {
+    setIsFormValid(event.target.closest('form').checkValidity());
+  }, []);
+
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    onLogin(values)
+  }
   return (
     <section className="auth">
       <Link to="/" className="auth__logo" alt="Логотип сайта"></Link>
-      <h1 className="auth__title">Рады видеть!</h1>
-      <form className="auth__inputs" ref={formRef} onSubmit={handleSubmit} isValid={isValid} onChange={handleChange}>
-        <fieldset className="auth__items auth__items-login">
-          <label className="auth__item auth__item-login">
+      <h2 className="auth__title">Рады видеть!</h2>
+
+      <form className="auth__inputs" onSubmit={handleSubmit}
+        onChange={handleFormValid} isloading={isLoading.toString()}>
+        <div className="auth__items">
+          <label className="auth__item">
             <p className="auth__item-label">E-mail</p>
             <input
-              className={'auth__input auth__input-login'}
+              className='auth__input'
               name="email"
               type="email"
+              id='inputEmail'
               placeholder="Ваш E-mail"
               value={values.email || ''}
-              onChange={handleChange}
-              // defaultValue='pochta@yandex.ru'
               required
+              onChange={handleChange}
+              pattern="^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,4}$"
             />
-            <span className={`auth__error ${errors.email ? 'auth__error_visible' : ''}`}>{errors.email}</span>
+            <span className={errorClassName('email')} id="inputEmail-error">{errors['email']}</span>
           </label>
 
-          <label className="auth__item auth__item-login">
+          <label className="auth__item">
             <p className="auth__item-label">Пароль</p>
             <input
-              className={'auth__input auth__input_error auth__input-login'}
+              className='auth__input'
               name="password"
               type="password"
+              id='inputPassword'
               minLength="2"
-              maxLength="30"
               placeholder="Ваш пароль"
               value={values.password || ''}
               onChange={handleChange}
               required
             />
-            <span className={`auth__error ${errors.password ? 'auth__error_visible' : ''}`}>{errors.password}Что-то пошло не так..</span>
+            <span className={errorClassName('password')} id="inputPassword-error">{errors['password']}</span>
           </label>
-        </fieldset>
-        <button className='auth__button auth__button-login' type="submit">Войти</button>
+        </div>
+        <button
+          className={`auth__button ${isFormValid ? '' : 'auth__button_disabled'} `}
+          type="submit" disabled={!isFormValid}>Войти</button>
       </form>
-
       <p className="auth__text">Ещё не зарегистрированы?
-        <Link to="/signup" className='auth__link'>Регистрация</Link></p>
-
+        <Link to="/signup" className="auth__link">Регистрация</Link>
+      </p>
     </section>
   );
 };
 
 export default Login;
-
